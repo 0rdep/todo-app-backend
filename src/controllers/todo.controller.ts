@@ -87,6 +87,15 @@ export class TodoController {
     await this.todoService.markDone(user.id, todoId);
   }
 
+  
+  @UseGuards(JwtAuthGuard)
+  @Put(':todoId/undone')
+  @HttpCode(200)
+  async markUndone(@Req() request: Request, @Param('todoId') todoId: string) {
+    const user = request.user as User;
+    await this.todoService.markUndone(user.id, todoId);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Delete(':todoId')
   @HttpCode(200)

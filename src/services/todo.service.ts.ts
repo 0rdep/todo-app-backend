@@ -91,6 +91,12 @@ export class TodoService {
     return this.todoModel.findByIdAndDelete({ _id: todoId, userId }).exec();
   }
 
+  async markUndone(userId: string, todoId: string) {
+    return this.todoModel
+      .update({ _id: todoId, userId }, { done: false })
+      .exec();
+  }
+
   async markDone(userId: string, todoId: string) {
     return this.todoModel
       .update({ _id: todoId, userId }, { done: true })
