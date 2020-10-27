@@ -32,9 +32,13 @@ export class TodoService {
   async getTodayTasksByCategory(userId: string) {
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
+
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
     return this.todoModel
       .aggregate([
-        { $match: { userId, date: { $gte: today } } },
+        { $match: { userId, date: { $gte: today, $lt: tomorrow } } },
         {
           $group: {
             _id: '$category',
